@@ -4,62 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulir Pengisian</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 0;
-    }
-    .form-container {
-      width: 100%;
-      max-width: 600px;
-      margin: 50px auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input[type="text"], input[type="email"], input[type="number"], input[type="datetime-local"], button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2>Formulir Layanan</h2>
-    <form name="submit-to-google-sheet" id="submit-to-google-sheet">
-      <input name="id" type="text" id="id" placeholder="ID (otomatis)" readonly>
-      <input name="name" type="text" placeholder="Nama" required>
-      <input name="service" type="text" placeholder="Layanan" required>
-      <input name="price" type="number" placeholder="Harga" required>
-      <input name="time" type="datetime-local" placeholder="Waktu" id="time" readonly>
-      <button type="submit">Kirim</button>
-    </form>
-  </div>
+  <form name="submit-to-google-sheet" id="submit-to-google-sheet">
+    <input name="id" type="text" id="id" placeholder="ID (otomatis)" readonly>
+    <input name="name" type="text" placeholder="Nama" required>
+    <input name="service" type="text" placeholder="Layanan" required>
+    <input name="price" type="number" placeholder="Harga" required>
+    <input name="time" type="datetime-local" id="time" placeholder="Waktu" readonly>
+    <button type="submit">Kirim</button>
+  </form>
 
   <script>
-    let form = document.getElementById('submit-to-google-sheet');
-    let idField = document.getElementById('id');
-    let timeField = document.getElementById('time');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw59sQ2Sdg1La_rEyDpqOxw0xsIUplm-V4TWDOb4mJ0Exy63VUzlMmT_2wXVl2E3xxL/exec';
+    const form = document.forms['submit-to-google-sheet'];
+    const idField = document.getElementById('id');
+    const timeField = document.getElementById('time');
 
     // Mengatur waktu otomatis
     function setCurrentTime() {
@@ -81,21 +41,13 @@
       setCurrentTime();
       setId();
     };
-  </script>
-  
-</body>
-<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw59sQ2Sdg1La_rEyDpqOxw0xsIUplm-V4TWDOb4mJ0Exy63VUzlMmT_2wXVl2E3xxL/exec' 
-    const form = document.forms['submit-to-google-sheet']
+
     form.addEventListener('submit', e => {
-        e.preventDefault()
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-         .then(response => console.log('Success!', response))
-         .catch(error => console.error('Error!', error.message))
-    })
-   
-    </script>
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => console.log('Success!', response))
+        .catch(error => console.error('Error!', error.message));
+    });
+  </script>
+</body>
 </html>
-
-
-   
