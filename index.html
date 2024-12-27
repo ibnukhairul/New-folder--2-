@@ -1,53 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulir Pengisian</title>
-</head>
-<body>
-  <form name="submit-to-google-sheet" id="submit-to-google-sheet">
-    <input name="id" type="text" id="id" placeholder="ID (otomatis)" readonly>
-    <input name="name" type="text" placeholder="Nama" required>
-    <input name="service" type="text" placeholder="Layanan" required>
-    <input name="price" type="number" placeholder="Harga" required>
-    <input name="time" type="datetime-local" id="time" placeholder="Waktu" readonly>
-    <button type="submit">Kirim</button>
-  </form>
 
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycby2sH9NIFe2aRdLT-1Qk8ThrbTgR_u2V2zw9AjJo85-hO1GXXGXAGM1CctI-EajwyWc/exec';
-    const form = document.forms['submit-to-google-sheet'];
-    const idField = document.getElementById('id');
-    const timeField = document.getElementById('time');
+<form name="submit-to-google-sheet">
+    <input name="name" type="name" placeholder="Name" required>
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="phone" type="phone" placeholder="Phone" required>
+    <button type="submit">Send</button>
+    </form>
 
-    // Mengatur waktu otomatis
-    function setCurrentTime() {
-      let currentTime = new Date();
-      let formattedTime = currentTime.toISOString().slice(0, 16);  // Format: YYYY-MM-DDTHH:MM
-      timeField.value = formattedTime;
-    }
-
-    // Mengatur ID otomatis (incremental)
-    function setId() {
-      let currentId = localStorage.getItem('formId') || 0;
-      currentId = parseInt(currentId) + 1;
-      localStorage.setItem('formId', currentId);
-      idField.value = currentId;
-    }
-
-    // Inisialisasi waktu dan ID saat halaman dimuat
-    window.onload = function() {
-      setCurrentTime();
-      setId();
-    };
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-        .then(response => console.log('Success!', response))
-        .catch(error => console.error('Error!', error.message));
-    });
-  </script>
-</body>
-</html>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzQgwQfQtwnMAonAs2tKBsz__E9TTmxZWlSqMc7Ao0_vC1ZagNMelDzW-vUTCV6XsPWZA/exec' 
+        const form = document.forms['submit-to-google-sheet']
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+             .then(response => console.log('Success!', response))
+             .catch(error => console.error('Error!', error.message))
+        })
+       
+        </script>
